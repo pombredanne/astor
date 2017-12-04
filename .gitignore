@@ -2,6 +2,9 @@ bad.txt
 test_codegen_dump_1.txt
 test_codegen_dump_2.txt
 
+# scratch directory for astor.rtrip
+tmp_rtrip/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -16,12 +19,15 @@ dist/
 eggs/
 lib/
 lib64/
+lib64
 parts/
 sdist/
 var/
 *.egg-info/
 .installed.cfg
 *.egg
+pyvenv.cfg
+pip-selfcheck.json
 
 # Installer logs
 pip-log.txt

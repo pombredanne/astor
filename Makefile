@@ -2,7 +2,8 @@ testenv:
 	pip install -e .
 
 release:
-	python setup.py sdist bdist_wheel upload -r pypi
+	python setup.py sdist bdist_wheel
+	twine upload dist/*
 
 register:
 	python setup.py sdist register -r pypi
@@ -17,7 +18,6 @@ test-register:
 clean:
 	find . -name "*.pyc" -exec rm {} \;
 	rm -rf *.egg-info
-	rm -rf build/ dist/
-	rm MANIFEST
+	rm -rf build/ dist/ __pycache__/
 
 .PHONY: clean register release

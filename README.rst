@@ -3,22 +3,25 @@ astor -- AST observe/rewrite
 =============================
 
 :PyPI: https://pypi.python.org/pypi/astor
-:Documentation: http://astor.rtfd.org/
+:Documentation: https://astor.rtfd.org/
 :Source: https://github.com/berkerpeksag/astor
 :License: 3-clause BSD
 :Build status:
     .. image:: https://secure.travis-ci.org/berkerpeksag/astor.png
         :alt: Travis CI
-        :target: http://travis-ci.org/berkerpeksag/astor/
+        :target: https://travis-ci.org/berkerpeksag/astor/
 
 astor is designed to allow easy manipulation of Python source via the AST.
 
 There are some other similar libraries, but astor focuses on the following areas:
 
-- Round-trip back to Python via Armin Ronacher's codegen.py module:
+- Round-trip an AST back to Python [1]_:
 
-  - Modified AST doesn't need linenumbers, ctx, etc. or otherwise be directly compileable
+  - Modified AST doesn't need linenumbers, ctx, etc. or otherwise
+    be directly compileable for the round-trip to work.
   - Easy to read generated code as, well, code
+  - Can round-trip two different source trees to compare for functional
+    differences, using the astor.rtrip tool (for example, after PEP8 edits).
 
 - Dump pretty-printing of AST
 
@@ -40,3 +43,23 @@ There are some other similar libraries, but astor focuses on the following areas
 
   - Write functions to access the tree based on object names and/or attribute names
   - Enjoy easy access to parent node(s) for tree rewriting
+
+.. [1]
+    The decompilation back to Python is based on code originally written
+    by Armin Ronacher.  Armin's code was well-structured, but failed on
+    some obscure corner cases of the Python language (and even more corner
+    cases when the AST changed on different versions of Python), and its
+    output arguably had cosmetic issues -- for example, it produced
+    parentheses even in some cases where they were not needed, to
+    avoid having to reason about precedence.
+
+    Other derivatives of Armin's code are floating around, and typically
+    have fixes for a few corner cases that happened to be noticed by the
+    maintainers, but most of them have not been tested as thoroughly as
+    astor.  One exception may be the version of codegen
+    `maintained at github by CensoredUsername`__.  This has been tested
+    to work properly on Python 2.7 using astor's test suite, and, as it
+    is a single source file, it may be easier to drop into some applications
+    that do not require astor's other features or Python 3.x compatibility.
+
+__ https://github.com/CensoredUsername/codegen
